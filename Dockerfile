@@ -83,6 +83,7 @@ RUN wget -O /liquibase/lib/mysql.jar https://repo1.maven.org/maven2/mysql/mysql-
 	&& echo "$MYSQL_SHA256  /liquibase/lib/mysql.jar" | sha256sum -c - 
 
 COPY --chown=liquibase:liquibase docker-entrypoint.sh /usr/local/bin/
+COPY --chown=liquibase:liquibase liquibase.properties /liquibase/liquibase.properties
 RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["--help"]
