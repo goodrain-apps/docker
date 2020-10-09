@@ -2,7 +2,7 @@ FROM openjdk:11-jre-slim-buster
 
 # Install GPG for package vefification
 RUN apt-get update \
-	&& apt-get -y install gnupg wget
+	&& apt-get -y install gnupg wget dnsutils
 
 # Add the liquibase user and step in the directory
 RUN addgroup --gid 1001 liquibase
@@ -85,5 +85,6 @@ RUN wget -O /liquibase/lib/mysql.jar https://repo1.maven.org/maven2/mysql/mysql-
 COPY --chown=liquibase:liquibase docker-entrypoint.sh /usr/local/bin/
 COPY --chown=liquibase:liquibase liquibase.properties /liquibase/liquibase.properties
 RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh
+ENV PATH=${PATH}:/liquibase
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["--help"]
